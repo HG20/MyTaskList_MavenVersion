@@ -24,9 +24,9 @@ h3 {
 }
 
 a:link  {
-    font-size:17px;
-    color:red;
+    font-size:14px;
     border-radius: 38px;
-    background-color: red;
+    background-color: darkgrey;
+
 }
 
