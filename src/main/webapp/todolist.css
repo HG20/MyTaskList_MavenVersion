@@ -3,4 +3,10 @@
 }
 #listOfTasks ul {
     list-style: none;
+    font-family: "Arial Narrow";
+}
+
+h2 {
+    font-family: Raleway;
+    color:red;
 }
