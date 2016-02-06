@@ -27,10 +27,10 @@ a:link  {
     color:red;
     text-decoration: none;
     font-size:large;
-    padding: 10px 20px;
-    width: 300px;
+    padding: 10px 40px;
+    width: 200px;
     border: 2px solid;
-    border-radius: 50px;
+    border-radius: 30px;
     background-color: antiquewhite;
     display: inline-block;
 
