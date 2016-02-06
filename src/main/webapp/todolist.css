@@ -9,6 +9,13 @@
 h2 {
     font-family: Raleway;
     color:red;
+    height: 20px;
+    width:800px;
+    margin:0 auto;
+
+}
+
+.addnewtask{
     width:800px;
     margin:0 auto;
 
