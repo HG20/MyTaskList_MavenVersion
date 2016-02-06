@@ -23,10 +23,10 @@ h3 {
     font-size: 40px;
 }
 
-button {
+a:link  {
     font-size:17px;
-    color:green;
+    color:red;
     border-radius: 28px;
-    
+    background-color: green;
 }
 
