@@ -3,6 +3,7 @@ package org.fasttrackit.dev.todolist.servlet;
 
 import org.fasttrackit.dev.todolist.MyListOfToDoMock;
 import org.fasttrackit.dev.todolist.ToDoBean;
+import org.fasttrackit.dev.todolist.db.DBOperations;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -25,11 +28,8 @@ import java.util.ListIterator;
 
 
 /* didactic purposes
-
 Some items are intentionally not optimized or not coded in the right way
-
 FastTrackIT 2015
-
 */
 
 public class ToDoListServlet extends HttpServlet {
@@ -40,6 +40,7 @@ public class ToDoListServlet extends HttpServlet {
     private static final String DONE_ACTION = "done";
     private static final String ID_TASK = "id";
     private static final String VALUE_NEWTASK = "value";
+    private static final String DUEDATE_NEWTASK = "dueDate";
 
     public void service(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("mytask list service called now.");
@@ -68,10 +69,15 @@ public class ToDoListServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         // call db
-
-        MyListOfToDoMock myListObject = MyListOfToDoMock.getInstance();
-        myListObject.printList();
-        List<ToDoBean> l = myListObject.getList();
+        List l = new LinkedList();
+        try {
+            l=DBOperations.readItems();
+            System.out.println("lungime din db:"+l.size());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // put the list in a json
         JsonObjectBuilder jObjBuilder = Json.createObjectBuilder();
@@ -79,12 +85,13 @@ public class ToDoListServlet extends HttpServlet {
         for (ListIterator<ToDoBean> iterator = l.listIterator(); iterator.hasNext(); ) {
             ToDoBean element = iterator.next();
             if (!element.isDone()) {
-                System.out.print(element.getId() + ":");
+                //System.out.print(element.getId() + ":");
                 System.out.println(element.getWhatToDo());
                 jArrayBuilder.add(Json.createObjectBuilder()
-                                .add("name", element.getWhatToDo())
-                                .add("done", false)
-                                .add("id", element.getId())
+                        .add("name", element.getWhatToDo())
+                        .add("dueDate", element.getDueDate())
+                        .add("done", false)
+                        .add("id", element.getId())
                 );
 
             }
@@ -107,20 +114,13 @@ public class ToDoListServlet extends HttpServlet {
 
         String idS = request.getParameter(ID_TASK);
         int id = Integer.parseInt(idS);
-        MyListOfToDoMock myListObject = MyListOfToDoMock.getInstance();
 
-        myListObject.printList();
-
-
-        List<ToDoBean> l = myListObject.getList();
-        for (ListIterator<ToDoBean> iterator = l.listIterator(); iterator.hasNext(); ) {
-            ToDoBean element = iterator.next();
-
-            if (element.getId() == id) {
-                System.out.println("found it, now canceling");
-                element.setDone(true);
-                iterator.set(element);
-            }
+        try {
+            DBOperations.updateItem(id);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         System.out.println("i am done");
@@ -133,12 +133,22 @@ public class ToDoListServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         String value = request.getParameter(VALUE_NEWTASK);
+        String dueDate = request.getParameter(DUEDATE_NEWTASK);
+
 
 
         MyListOfToDoMock myListObject = MyListOfToDoMock.getInstance();
-        myListObject.printList();
+        // myListObject.printList();
 
-        myListObject.addItem(value);
+        myListObject.addItem(value,dueDate);
+
+        try {
+            DBOperations.addItem(value,dueDate,false);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("now I am done");
 
