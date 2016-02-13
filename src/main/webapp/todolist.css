@@ -48,7 +48,11 @@ a:link  {
     background-color: antiquewhite;
     display: inline-block;
 }
+.submit {
+    font-family: "Arial Narrow";
+    background-color: white;
 
+}
 #f1 {
     background-color: aliceblue;
     border-style: solid;
