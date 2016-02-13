@@ -13,7 +13,7 @@
 
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>org.fasttrackit.dev.todolist.servlet.ToDoListServlet</servlet-class>
+        <servlet-class>org.fasttrackit.dev.todolist.servlet.LoginServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
