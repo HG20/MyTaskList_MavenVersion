@@ -38,12 +38,14 @@ a:link  {
 }
 
 .login-form {
-    position: absolute;
-    top: 20%;
-    left: 30%;
-    right: 30%;
-    bottom: 20%;
-    font-size: 18px;
+    text-decoration: none;
+    font-size:large;
+    padding: 10px 40px;
+    width: 200px;
+    border: 2px solid;
+    border-radius: 30px;
+    background-color: antiquewhite;
+    display: inline-block;
 }
 
 #f1 {
