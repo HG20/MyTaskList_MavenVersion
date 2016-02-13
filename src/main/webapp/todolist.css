@@ -49,10 +49,10 @@ a:link  {
 }
 
 #f1 {
-    background-color: antiquewhite;
+    background-color: lightskyblue;
     border-style: solid;
     border-width: 1px;
-    width: 330px;
+    width: 300px;
 }
 .f1_label {
     white-space: nowrap;
