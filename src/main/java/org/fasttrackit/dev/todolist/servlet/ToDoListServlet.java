@@ -47,18 +47,28 @@ public class ToDoListServlet extends HttpServlet {
 
 
         HttpSession session = request.getSession(true);
-        String action = request.getParameter(ACTION);
+
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            System.out.println("You are not logged in");
+
+        } else {
+            System.out.println("You are already logged in");
 
 
-        if (action != null && action.equals(LIST_ACTION)) {
-            listAction(request, response);
-        } else if (action != null && action.equals(ADD_ACTION)) {
-            addAction(request, response);
-        } else if (action != null && action.equals(DONE_ACTION)) {
-            doneAction(request, response);
+            String action = request.getParameter(ACTION);
+
+
+            if (action != null && action.equals(LIST_ACTION)) {
+                listAction(request, response);
+            } else if (action != null && action.equals(ADD_ACTION)) {
+                addAction(request, response);
+            } else if (action != null && action.equals(DONE_ACTION)) {
+                doneAction(request, response);
+            }
+
+
         }
-
-
     }
 
 
